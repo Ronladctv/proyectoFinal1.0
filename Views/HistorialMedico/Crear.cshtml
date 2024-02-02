@@ -1,0 +1,83 @@
+﻿@model proyectoFinal.Models.Entidades.HistorialMedico
+@{
+    ViewData["Title"] = "CrearHistorialMedico";
+    Layout = null;
+}
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-header text-center">
+            <h5>Crear Historial Médico</h5>
+        </div>
+        <div class="card-body text-center">
+            <form asp-action="Crear" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="mb-3">
+                    <label class="form-label">Número de Historial</label>
+                    <input class="form-control" type="text" asp-for="NumHistorial" />
+                    <span asp-validation-for="NumHistorial" class="field-validation-error"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Detalles</label>
+                    <input class="form-control" type="text" asp-for="Detalles" required />
+                    <span asp-validation-for="Detalles" class="field-validation-error"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Antecedentes Familiares</label>
+                    <input class="form-control" type="text" asp-for="AntecedentesFamiliares" required />
+                    <span asp-validation-for="AntecedentesFamiliares" class="field-validation-error"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Antecedentes Personales</label>
+                    <input class="form-control" type="text" asp-for="AntecedentesPersonales" required />
+                    <span asp-validation-for="AntecedentesPersonales" class="field-validation-error"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Alergias</label>
+                    <input class="form-control" type="text" asp-for="Alergias" required />
+                    <span asp-validation-for="Alergias" class="field-validation-error"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Notas y Observaciones</label>
+                    <input class="form-control" type="text" asp-for="NotasObservaciones" required />
+                    <span asp-validation-for="NotasObservaciones" class="field-validation-error"></span>
+                </div>
+
+                <!-- Agrega aquí las secciones relacionadas con Pacientes y Medicamentos -->
+           
+
+                <div class="mb-3">
+                    <label class="form-label">Paciente</label>
+                    <select asp-for="Pacienteid" asp-items="@(new SelectList(Model.Paciente, "Value", "Text"))" class="form-control" required>
+                        <option value="">Seleccione un paciente</option>
+                    </select>
+                    <span asp-validation-for="Pacienteid" class="field-validation-error"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Medicamento</label>
+                    <select asp-for="Medicamentoid" asp-items="@(new SelectList(Model.Medicamentos, "Value", "Text"))" class="form-control" required>
+                        <option value="">Seleccione un medicamento</option>
+                    </select>
+                    <span asp-validation-for="Medicamentoid" class="field-validation-error"></span>
+                </div>
+
+            
+
+
+                <div class="card-footer">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-save"></i> Guardar</button>
+                        <button type="button" class="btn btn-sm btn-primary" data-bs-dismiss="modal"><i class="fa fa-ban"></i> Cancelar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

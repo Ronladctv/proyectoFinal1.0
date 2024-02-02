@@ -1,0 +1,177 @@
+﻿@model IEnumerable<proyectoFinal.Models.Entidades.Pacientes>
+
+@{
+    ViewData["Title"] = "ListadoPacientes";
+}
+
+<style>
+    .titulo {
+        margin-left: 10px;
+    }
+
+    .mensaje {
+        margin-left: 10px;
+    }
+
+    .paciente-card {
+        margin-bottom: 20px;
+        border-radius: 8px;
+        padding: 15px;
+    }
+
+        .paciente-card:nth-child(even) {
+            background-color: #85929E; /* Fondo gris azulado para índices pares */
+        }
+
+        .paciente-card:nth-child(odd) {
+            background-color: #D7DBDD; /* Fondo blanco para índices impares */
+        }
+
+    .card-title {
+        color: #007bff;
+        font-size: 1.5em;
+        margin-bottom: 10px;
+    }
+
+    .card-text {
+        color: #495057;
+        font-size: 1.1em;
+        margin-bottom: 8px;
+    }
+
+    .btn-editar {
+        background-color: #ffc107;
+        color: #212529;
+    }
+
+    .btn-eliminar {
+        background-color: #dc3545;
+        color: #ffffff;
+    }
+</style>
+
+<div class="titulo">
+    <div class="col-md-12">
+        <h4>Listado de Pacientes</h4>
+    </div>
+</div>
+
+@if (TempData["ALertMessage"] != null)
+{
+    <div class="alert alert-success">
+        <strong> Ok!!---</strong>@TempData["AlertMessage"]
+    </div>
+}
+
+<div class="mensaje">
+    <p>
+        <a onclick="showInPopup('@Url.Action("Crear", "Pacientes", new { id = 0 }, Context.Request.Scheme)' , '')" class="btn btn-sm btn-success text-white">
+            Agregar un paciente <i class="fa fa-plus-circle"></i>
+        </a>
+    </p>
+</div>
+
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-body">
+            <table id="pacientes" class="table table-hover table-responsive table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Cedula</th>
+                        <th scope="col">Paciente</th>
+                        <th scope="col">Correo</th>
+                        <th scope="col">Telefono</th>
+                        <th scope="col">Edad</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">@item.PacienteID</th>
+                            <td> @Html.DisplayFor(modelItem => item.Cedula)</td>
+                            <td> @Html.DisplayFor(modelItem => item.NombrePaciente)</td>
+                            <td> @Html.DisplayFor(modelItem => item.Correo)</td>
+                            <td> @Html.DisplayFor(modelItem => item.Telefono)</td>
+                            <td> @Html.DisplayFor(modelItem => item.Edad)</td>
+                            <td>
+                                <a onclick="showInPopup('@Url.Action("Editar", "Pacientes", new { id = item.PacienteID }, Context.Request.Scheme)' , 'Actualizar Paciente')" class="btn btn-editar btn-sm">
+                                    <i class="fa fa-pencil-alt"></i> Editar
+                                </a>
+                                <button data-id="@item.PacienteID" class="btn btn-eliminar btn-sm deleteItem" data-bs-toggle="modal" data-bs-target="#deleteDialog">
+                                    <i class="fa fa-trash"></i> Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="7">
+                                    <div class="card paciente-card">
+                                        <div class="card-body">
+                                        <h5 class="card-title">
+                                            <i class="fa fa-hashtag"></i> Paciente ID: @item.PacienteID
+                                        </h5>
+                                        <p class="card-text">
+                                            <i class="fa fa-address-card"></i> Cédula: @Html.DisplayFor(modelItem => item.Cedula)
+                                        </p>
+                                        <p class="card-text">
+                                            <i class="fa fa-user"></i> Nombre: @Html.DisplayFor(modelItem => item.NombrePaciente)
+                                        </p>
+                                        <p class="card-text">
+                                            <i class="fa fa-envelope"></i> Correo: @Html.DisplayFor(modelItem => item.Correo)
+                                        </p>
+                                        <p class="card-text">
+                                            <i class="fa fa-phone"></i> Teléfono: @Html.DisplayFor(modelItem => item.Telefono)
+                                        </p>
+                                        <p class="card-text">
+                                            <i class="fa fa-birthday-cake"></i> Edad: @Html.DisplayFor(modelItem => item.Edad)
+                                        </p>
+                                            <div class="text-center">
+                                            <a onclick="showInPopup('@Url.Action("Editar", "Pacientes", new { id = item.PacienteID }, Context.Request.Scheme)' , 'Actualizar Paciente')" class="btn btn-editar btn-sm">
+                                                <i class="fa fa-pencil-alt"></i> Editar
+                                            </a>
+                                            <button data-id="@item.PacienteID" class="btn btn-eliminar btn-sm deleteItem" data-bs-toggle="modal" data-bs-target="#deleteDialog">
+                                                <i class="fa fa-trash"></i> Eliminar
+                                            </button>
+                                            
+                                            
+                                             <div/>
+
+                                        </div>
+
+                                    </div>
+
+                                   
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<partial name="_MostrarModal" />
+<partial name="_EliminarModal" />
+
+@section Scripts {
+    <script src="~/js/ShowModal.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#pacientes').DataTable({
+                "language": {
+                    url: "https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
+                },
+            });
+        });
+    </script>
+    <script>
+        sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Pacientes/Eliminar/', false);
+    </script>
+}
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>

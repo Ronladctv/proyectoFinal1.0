@@ -1,0 +1,167 @@
+﻿@model IEnumerable<proyectoFinal.Models.Entidades.Medicamento>
+
+@{
+    ViewData["Title"] = "ListadoMedicamento";
+}
+
+<style>
+    .titulo {
+        margin-left: 10px;
+    }
+
+    .mensaje {
+        margin-left: 10px;
+    }
+
+    .medicamento-card {
+        margin-bottom: 20px;
+    }
+
+    .card-content {
+        background-image: url('/imagenes/15.png'); /* Ruta de tu imagen de fondo */
+        background-size: cover; /* Ajusta según sea necesario */
+        background-position: center; /* Ajusta según sea necesario */
+        padding: 10px; /* Ajusta según sea necesario */
+        border-radius: 8px; /* Ajusta según sea necesario */
+    }
+
+    .card-title i,
+    .card-text i {
+        margin-right: 5px;
+    }
+</style>
+
+<div class="titulo">
+    <div class="col-md-12">
+        <h4>Listado de Medicamentos</h4>
+    </div>
+</div>
+
+@if (TempData["ALertMessage"] != null)
+{
+    <div class="alert alert-success">
+        <strong> Ok!!---</strong>@TempData["AlertMessage"]
+    </div>
+}
+
+<div class="mensaje">
+    <p>
+        <a onclick="toggleTable()" class="btn btn-sm btn-success text-white">
+            Ver/ocultar tabla <i class="fa fa-list"></i>
+        </a>
+    </p>
+</div>
+
+<div class="col-md-12" id="medicamentoTableContainer" style="display: none;">
+    <div class="card">
+        <div class="card-body">
+            <table id="medicamento" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nombre Medicamento</th>
+                        <th scope="col">Forma Farmaceutica</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Concentración</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">@item.MedicamentoID</th>
+                            <td>@Html.DisplayFor(modelItem => item.NombreMedicamento)</td>
+                            <td>@Html.DisplayFor(modelItem => item.FormFarmaceutica)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Tipo)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Concentracion)</td>
+                            <td>@item.FechaVencimiento.ToString("dd-MM-yyyy")</td>
+                            <td>
+                                <a onclick="showInPopup('@Url.Action("Editar", "Medicamento", new { id = item.MedicamentoID }, Context.Request.Scheme)' , 'Actualizar Medicamento')" class="btn btn-outline-warning btn-sm">
+                                    <i class="fa fa-pencil-alt"></i> Editar
+                                </a>
+                                <button data-id="@item.MedicamentoID" class="btn btn-outline-danger btn-sm deleteItem" data-bs-toggle="modal" data-bs-target="#deleteDialog">
+                                    <i class="fa fa-trash"></i> Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="col-md-12" id="medicamentoCardContainer">
+    @for (int i = 0; i < Model.Count(); i++)
+    {
+        if (i % 3 == 0)
+        {
+            @:<div class="row">
+        }
+        <div class="col-md-4">
+            <div class="card medicamento-card">
+                <div class="card-body">
+                    <div class="card-content">
+                        <h5 class="card-title">
+                            <i class="fa fa-pills"></i> @Model.ElementAt(i).NombreMedicamento
+                        </h5>
+                        <p class="card-text">
+                            <i class="fa fa-flask"></i> Forma Farmaceutica: @Model.ElementAt(i).FormFarmaceutica
+                        </p>
+                        <p class="card-text">
+                            <i class="fa fa-tag"></i> Tipo: @Model.ElementAt(i).Tipo
+                        </p>
+                        <p class="card-text">
+                            <i class="fa fa-percent"></i> Concentración: @Model.ElementAt(i).Concentracion
+                        </p>
+                        <p class="card-text">
+                            <i class="fa fa-calendar-alt"></i> Fecha de Vencimiento: @Model.ElementAt(i).FechaVencimiento.ToString("dd-MM-yyyy")
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        if (i % 3 == 2 || i == Model.Count() - 1)
+        {
+            @:</div>
+        }
+    }
+</div>
+
+<div class="mensaje">
+    <p>
+        <a onclick="showInPopup('@Url.Action("Crear", "Medicamento", new { id = 0 }, Context.Request.Scheme)' , '')" class="btn btn-sm btn-success text-white">
+            Agregar un medicamento <i class="fa fa-plus-circle"></i>
+        </a>
+    </p>
+</div>
+
+<partial name="_MostrarModal" />
+<partial name="_EliminarModal" />
+
+@section Scripts {
+    <script src="~/js/ShowModal.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#medicamento').DataTable({
+                "language": {
+                    url: "https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
+                },
+            });
+        });
+
+        function toggleTable() {
+            $('#medicamentoTableContainer').toggle();
+        }
+    </script>
+    <script>
+        sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Medicamento/Eliminar/', false);
+    </script>
+}
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>

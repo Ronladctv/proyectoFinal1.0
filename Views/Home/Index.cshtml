@@ -1,0 +1,417 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Tu Página</title>
+    <style>
+        /* Estilos existentes */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa; /* Color de fondo */
+        }
+
+        .logo {
+            position: absolute;
+            top: 5px;
+            right: 25px;
+            max-width: 80px;
+            max-height: 55px;
+        }
+
+            .logo a {
+                color: #fff; /* Color blanco */
+                font-size: 24px; /* Tamaño del icono */
+            }
+
+                .logo a:hover {
+                    color: #ccc; /* Cambiar color al pasar el ratón */
+                }
+
+        .jumbotron {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 2rem;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+            .jumbotron h1 {
+                color: #1b6ec2;
+                font-size: 3rem;
+                margin-bottom: 20px;
+            }
+
+            .jumbotron p {
+                color: #555;
+                font-size: 1.25rem;
+                margin-bottom: 20px;
+            }
+
+        .feature-box {
+            background-color: #fff; /* Color de fondo de las cajas de características */
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+            .feature-box h3 {
+                color: #1b6ec2;
+                font-size: 1.5rem;
+                margin-bottom: 10px;
+            }
+
+            .feature-box p {
+                font-size: 1.25rem;
+                color: #555;
+            }
+
+        .imagen {
+            width: 20px;
+            height: 20px;
+            opacity: 0.2;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .body1 {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Nuevos estilos para la sección de características con imagen de fondo */
+        .feature-box-con-fondo {
+            background-color: #A6ACAF ;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #ffffff;
+            text-align: center; /* Alinea el texto al centro */
+            height: 60vh; /* Reducido la altura del recuadro */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center; /* Alinea el contenido al centro horizontalmente */
+            opacity: 0.8; /* Hace las imágenes un poco más transparentes */
+            background: linear-gradient(to bottom, #ffffff, #f8f9fa); /* Agrega un degradado desde blanco hasta gris claro */
+        }
+
+            .feature-box-con-fondo h3 {
+                color: #ffffff;
+                font-size: 2rem;
+                margin-bottom: 10px;
+            }
+
+            .feature-box-con-fondo p {
+                font-size: 1.25rem;
+                color: #ffffff;
+                margin-bottom: 20px;
+            }
+
+            .feature-box-con-fondo.agenda {
+                background-image: url('/imagenes/1.png'); /* Reemplaza con la ruta de tu imagen 1 */
+            }
+
+            .feature-box-con-fondo.doctores {
+                background-image: url('/imagenes/2.png'); /* Reemplaza con la ruta de tu imagen 2 */
+            }
+
+            .feature-box-con-fondo.historiales {
+                background-image: url('/imagenes/3.png'); /* Reemplaza con la ruta de tu imagen 3 */
+            }
+
+        /* Estilos para la sección "Mi Sección" */
+        .seccion-con-fondo {
+            background-image: url('/imagenes/4.png'); /* Reemplaza con la ruta de tu imagen de fondo */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: #000000; /* Cambia el color del texto a negro */
+            padding: 100px;
+            text-align: justify;
+            text-align: left; /* Alinea el texto a la izquierda */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0.9;
+        }
+
+            .seccion-con-fondo h1 {
+                font-size: 2.3rem; /* Tamaño del texto */
+                margin-bottom: 20px; /* Espacio inferior al texto */
+            }
+
+            .seccion-con-fondo p {
+                font-size: 1.2rem; /* Tamaño del texto */
+                margin-bottom: 20px; /* Espacio inferior al texto */
+            }
+
+        /* Estilos para la sección "Mi Sección" */
+        .seccion-con-fondo1 {
+            background-image: url('/imagenes/6.jpg'); /* Reemplaza con la ruta de tu imagen de fondo */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white; /* Cambia el color del texto a negro */
+            padding: 100px;
+            text-align: justify;
+            text-align: left; /* Alinea el texto a la izquierda */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0.9;
+        }
+
+            .seccion-con-fondo1 h1 {
+                font-size: 2.3rem; /* Tamaño del texto */
+                margin-bottom: 20px; /* Espacio inferior al texto */
+            }
+
+            .seccion-con-fondo1 p {
+                font-size: 1.2rem; /* Tamaño del texto */
+                margin-bottom: 20px; /* Espacio inferior al texto */
+            }
+
+        /* Agrega estos estilos al final de tu archivo CSS */
+
+        .departamentos {
+            background-color: rgba(229, 231, 233, 0.9); /* Fondo con opacidad */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+        }
+
+        .departamento {
+            text-align: center;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 10px;
+            background-color: #ffffff; /* Color de fondo blanco */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+        }
+
+            .departamento i {
+                font-size: 36px;
+                margin-bottom: 10px;
+            }
+
+            .departamento h2 {
+                font-size: 1.5rem;
+                color: #333; /* Color de texto negro */
+            }
+
+            .departamento p {
+                font-size: 1rem;
+                color: #555; /* Color de texto gris oscuro */
+            }
+
+            /* Estilo adicional para el primer departamento */
+            .departamento:first-child {
+                flex-basis: 100%; /* Hacer que ocupe todo el ancho */
+            }
+
+        .perfil-container {
+            text-align: left; /* Alinea la imagen y el nombre a la izquierda */
+            margin-bottom: 20px; /* Ajusta el espacio entre la imagen y el texto */
+        }
+
+        .perfil-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%; /* Hace que la imagen sea redonda */
+            margin-right: 10px; /* Ajusta el espacio entre la imagen y el texto */
+        }
+
+        .perfil-nombre {
+            font-weight: bold;
+            display: inline-block; /* Permite que el nombre esté en la misma línea que la imagen */
+        }
+
+
+        /* Estilos para la sección "Mi Sección" */
+        .seccion-con-fondo2 {
+            background-image: url('/imagenes/11.png'); /* Reemplaza con la ruta de tu imagen de fondo */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white; /* Cambia el color del texto a blanco */
+            padding: 100px;
+            text-align: justify;
+            text-align: left; /* Alinea el texto a la izquierda */
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; /* Alinea el contenido al final de la columna */
+            opacity: 0.8;
+        }
+
+            .seccion-con-fondo2 h1 {
+                font-size: 2.3rem; /* Tamaño del texto */
+                margin-bottom: 20px; /* Espacio inferior al texto */
+            }
+
+            .seccion-con-fondo2 p {
+                font-size: 1.2rem; /* Tamaño del texto */
+                margin-bottom: 20px; /* Espacio inferior al texto */
+            }
+
+       
+    </style>
+</head>
+<body>
+     @if (User.IsInRole("Usuario"))
+    {
+        <section>
+            <div class="jumbotron">
+                <h1 class="display-4">Bienvenido al Sistema de Agendamientos</h1>
+                <p class="lead">¡Hola, bienvenido a este nuevo mundo de agendamientos de citas médicas!</p>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="feature-box feature-box-con-fondo agenda">
+                            <h3>Agenda tus Citas</h3>
+                            <p>Programa y gestiona tus citas médicas de manera eficiente.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-box feature-box-con-fondo doctores">
+                            <h3>Explora Doctores</h3>
+                            <p>Encuentra información detallada sobre los doctores disponibles.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="feature-box feature-box-con-fondo historiales">
+                            <h3>Consulta tus Historiales</h3>
+                            <p>Accede fácilmente a tus historiales médicos y registros de citas anteriores.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="body1">
+                <div class="seccion-con-fondo">
+                    <h1>Sistema de Agendamiento
+                        <br />   de Citas</h1>
+                    <p>
+                        Optimiza&nbsp;&nbsp;&nbsp;  la&nbsp;&nbsp;  gestión&nbsp;&nbsp; de&nbsp;&nbsp;  tu&nbsp;  tiempo&nbsp;  y&nbsp;&nbsp;  la
+                        <br />experiencia&nbsp;&nbsp;  de  tus&nbsp;&nbsp;  pacientes&nbsp;&nbsp;  con&nbsp;  nuestro
+                        <br />eficiente&nbsp;&nbsp; sistema  de&nbsp;&nbsp; agendamiento&nbsp;  de  citas.
+                        <br />Olvídate&nbsp;&nbsp;  de&nbsp;&nbsp; los &nbsp;&nbsp; inconvenientes,  agiliza&nbsp;&nbsp; el
+                        <br /> proceso y ofrece un servicio más conveniente.
+                        <br />Descubre&nbsp;&nbsp; una&nbsp;&nbsp;   forma &nbsp;&nbsp;  más&nbsp;&nbsp;   inteligente&nbsp;&nbsp;  de
+                        <br />programar y gestionar citas médicas..
+                    </p>
+                </div>
+            </div>
+        </section>
+        <section class="departamentos">
+            <!-- Primer departamento -->
+        <div class="departamento">
+            <h2 class="highlight">NUESTROS DEPARTAMENTOS</h2>
+            
+            <p>Exploramos una variedad de especialidades para brindarte un servicio integral. Desde la oftalmología hasta la cirugía, 
+            <br/>   nuestros departamentos están compuestos por profesionales altamente capacitados. </p>
+        </div>
+
+        <!-- Resto de los departamentos en una columna -->
+        <div class="departamento">
+            <i class="fas fa-heart"></i>
+            <h2 class="highlight">CUIDADO DEL CORAZON</h2>
+            
+        </div>
+
+        <div class="departamento">
+            <i class="fas fa-brain"></i>
+            <h2>NEUROLOGÍA</h2>
+        </div>
+
+        <div class="departamento">
+            <i class="fas fa-tooth"></i>
+            <h2>CUIDADO DENTAL</h2>
+        </div>
+        <div class="departamento">
+            <i class="fas fa-eye"></i>
+            <h2>OFTALMOLOGIA</h2>
+        </div>
+
+        <div class="departamento">
+            <i class="fas fa-ambulance"></i>
+            <h2>EMERGENCIA</h2>
+        </div>
+    </section>
+    }
+
+    @if (User.IsInRole("Doctor"))
+    {
+        <section>
+            <div class="body1">
+                <div class="seccion-con-fondo1">
+                    @if (!string.IsNullOrEmpty(ViewData["fotoPerfil"] as string))
+                    {
+                        <div class="perfil-container">
+                            <img src="@ViewData["fotoPerfil"]" alt="Foto de perfil" class="perfil-img" />
+                        <p class="perfil-nombre">Dr./Dra.   @ViewData["nomUsuario"]</p>
+                    </div>
+                }
+                <h1>Bienvenido, especialista <br/> médico</h1>
+                <p>
+                    Bienvenido,&nbsp;&nbsp;  médico.&nbsp;&nbsp; Desde&nbsp; &nbsp;  aquí&nbsp;&nbsp; podrás
+                    <br />administrar&nbsp; &nbsp;  citas y&nbsp; &nbsp;  gestionar&nbsp;&nbsp; el ingreso de
+                    <br/>pacientes.
+                    <br />Optimiza&nbsp;&nbsp;&nbsp; la&nbsp;&nbsp; gestión&nbsp;&nbsp; de&nbsp;&nbsp; tu&nbsp;&nbsp;  tiempo&nbsp;&nbsp;  y&nbsp;&nbsp; la
+                    <br />experiencia&nbsp;&nbsp; de&nbsp;   tus&nbsp;&nbsp; pacientes&nbsp;&nbsp; con&nbsp;  nuestro
+                    <br />eficiente&nbsp;&nbsp; sistema  de&nbsp;&nbsp; agendamiento&nbsp;  de  citas.
+                    <br />Olvídate&nbsp;&nbsp;  de&nbsp;&nbsp; los &nbsp;&nbsp; inconvenientes,  agiliza&nbsp;&nbsp; el
+                    <br />proceso y ofrece un servicio más conveniente.
+                    <br />Descubre&nbsp;&nbsp; una&nbsp;&nbsp;   forma &nbsp;&nbsp;  más&nbsp;&nbsp;   inteligente&nbsp;&nbsp;  de
+                    <br />programar y gestionar citas médicas.
+                </p>
+            </div>
+        </div>
+    </section>
+}
+
+
+   @if (User.IsInRole("Admin"))
+    {
+        <section>
+            <div class="body1">
+                <div class="seccion-con-fondo2">
+                    @if (!string.IsNullOrEmpty(ViewData["fotoPerfil"] as string))
+                    {
+                        <div class="perfil-container">
+                            <img src="@ViewData["fotoPerfil"]" alt="Foto de perfil" class="perfil-img" />
+                        <p class="perfil-nombre">Administrador/a @ViewData["nomUsuario"]</p>
+                    </div>
+                }
+                <h1>Bienvenido, administrador/a</h1>
+                <p>
+                        Bienvenido, administrador/a. Desde &nbsp;&nbsp;aquí podrás administrar toda la aplicación y
+                        <br /> realizar tareas específicas de administración. Optimiza la gestión de la plataforma
+                        <br /> y garantiza un funcionamiento eficiente.
+                        <br />Además, como administrador/a, tienes&nbsp;&nbsp; acceso a funcionalidades avanzadas que
+                        <br />te permitirán configurar y personalizar la aplicación según tus necesidades.
+                        <br />Descubre&nbsp;&nbsp; una forma&nbsp;&nbsp; más completa&nbsp; de gestionar y controlar todos los aspectos
+                    <br />del sistema.
+                    <br />¡Gracias por tu labor como administrador/a!
+                </p>
+            </div>
+        </div>
+    </section>
+    }
+
+
+</body>
+</html>

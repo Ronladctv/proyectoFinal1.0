@@ -1,0 +1,109 @@
+﻿@model IEnumerable<proyectoFinal.Models.Entidades.Doctores>
+
+@{
+    ViewData["Title"] = "ListadoDoctores";
+}
+
+<style>
+    .titulo {
+        margin-left: 10px;
+    }
+
+    .mensaje {
+        margin-left: 10px;
+    }
+
+</style>
+<div class="titulo">
+    <div class="col-md-12">
+        <h4>Listado de Doctores</h4>
+    </div>
+</div>
+
+@if (TempData["AlertMessage"] != null)
+{
+    <div class="alert alert-success">
+        <strong>¡Ok! -- </strong>@TempData["AlertMessage"]
+    </div>
+}
+
+<div class="mensaje">
+    <p>
+        <a onclick="showInPopup('@Url.Action("Crear", "Doctores", new { id = 0 }, Context.Request.Scheme)' , '')"
+           class="btn btn-sm btn-success text-white">
+            Agregar un doctor  <i class="fa fa-plus-circle"></i>
+        </a>
+    </p>
+</div>
+<div class="col-md-12">
+    <div class="card">
+
+        <div class="card-body">
+            <table id="doctores" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Cédula</th>
+                        <th scope="col">Teléfono</th>
+                        <th scope="col">Dirección</th>
+                        <th scope="col">Título</th>
+                        <th scope="col">Especialidad</th>
+                        <th scope="col">Usuario</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var doctor in Model)
+                    {
+                        <tr>
+                            <th scope="row">@doctor.DoctorID</th>
+                            <td>@doctor.Cedula</td>
+                            <td>@doctor.Telefono</td>
+                            <td>@doctor.Direccion</td>
+                            <td>@doctor.Titulo</td>
+                            <td>@doctor.Especialidades.NombreEspecialidad</td>
+                            <td>@doctor.Usuarios.Nombre</td>
+                            <td>
+                                <a onclick="showInPopup('@Url.Action("Editar", "Doctores", new { id = doctor.DoctorID }, Context.Request.Scheme)' , 'Actualizar Doctor')"
+                                   class="btn btn-outline-warning btn-sm">
+                                    <i class="fa fa-pencil-alt"></i>
+                                </a>
+                                <button data-id="@doctor.DoctorID"
+                                        class="btn btn-outline-danger btn-sm deleteItem"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteDialog">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<partial name="_MostrarModal" />
+<partial name="_EliminarModal" />
+
+@section Scripts {
+    <script src="~/js/ShowModal.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#doctores').DataTable({
+                "language": {
+                    url: "https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
+                }
+            });
+        });
+    </script>
+
+    <script>
+        sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Doctores/Eliminar/', false);
+    </script>
+}
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>

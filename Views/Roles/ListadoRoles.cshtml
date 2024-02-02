@@ -1,0 +1,114 @@
+﻿@model IEnumerable<proyectoFinal.Models.Entidades.Roles>
+
+@{
+    ViewData["Title"] = "ListadoRoles";
+}
+<style>
+    .titulo {
+        margin-left: 10px;
+    }
+
+    .mensaje {
+        margin-left: 10px;
+    }
+
+</style>
+
+<div class="titulo">
+    <div class="col-md-12">
+        <h4>Listado de Roles</h4>
+    </div>
+</div>
+
+
+@if (TempData["ALertMessage"] != null)
+{
+    <div class=" alert alert-success">
+        <strong> Ok!!---</strong>@TempData["AlertMessage"]
+    </div>
+}
+
+
+<div class="mensaje">
+<p>
+
+    <a onclick="showInPopup('@Url.Action("Crear", "Roles",
+    new { id = 0 }, Context.Request.Scheme)' ,
+    '')" class="btn btn-sm btn-success text-white">
+        Agregar un rol <i class="fa fa-plus-circle"></i>
+    </a>
+</p>
+</div>
+
+<div class="col-md-12">
+    <div class="card">
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table id="rol" class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">NombreRol</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <th scope="row">@item.RolID</th>
+                                <td>@Html.DisplayFor(modelItem => item.NombreRol)</td>
+                                <td>
+                                    <a onclick="showInPopup('@Url.Action("Editar", "Roles", new { id = item.RolID }, Context.Request.Scheme)' ,
+                                        'Actualizar Rol')" class="btn btn-warning btn-sm" title="Editar">
+                                        <i class="fa fa-pencil-alt"></i>
+                                    </a>
+                                    <button data-id="@item.RolID"
+                                            class="btn btn-danger btn-sm deleteItem" title="Eliminar"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#deleteDialog">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p>Total de roles: @ViewBag.TotalRoles</p>
+
+<partial name="_MostrarModal" />
+<partial name="_EliminarModal" />
+
+
+@section Scripts {
+
+    <script src="~/js/ShowModal.js"></script>
+
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#rol').DataTable(
+                {
+                    "language": {
+                        url: "https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
+                    },
+                });
+        });
+    </script>
+
+    <script>
+        sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Roles/Eliminar/', false);
+    </script>
+}
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>

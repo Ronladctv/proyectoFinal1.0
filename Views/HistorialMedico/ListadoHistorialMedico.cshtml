@@ -1,0 +1,214 @@
+﻿@model IEnumerable<proyectoFinal.Models.Entidades.HistorialMedico>
+
+@{
+    ViewData["Title"] = "ListadoHistorialMedico";
+}
+
+<style>
+    .titulo {
+        margin-left: 10px;
+    }
+
+    .mensaje {
+        margin-left: 10px;
+    }
+
+    /* ... Otros estilos existentes ... */
+    /* Establecer imagen de fondo para historial-card */
+    .historial-card {
+        margin-bottom: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        padding: 15px;
+        transition: box-shadow 0.3s;
+        background-image: url('/imagenes/15.png');
+        background-size: cover;
+        background-position: center;
+        color: gray
+        position: relative;
+        font-size: 1.2em; /* Tamaño de letra más grande */
+        font-weight: bold; /* Texto en negrita */
+    }
+
+    .card-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 10px; /* Ajusta según sea necesario */
+        background-color: rgba(173, 216, 230, 0.3); /* Opacidad del 50% */
+        border-radius: 8px;
+        width: 60%;
+        max-width: 300px;
+        text-align: center;
+    }
+
+    .historial-card:hover {
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .historial-card h5 {
+        font-size: 1em; /* Ajusta según sea necesario */
+        margin-bottom: 10px;
+    }
+
+    .historial-card p {
+        font-size: 0.8em; /* Ajusta según sea necesario */
+        color: #555;
+        margin-bottom: 8px;
+    }
+
+    .historial-card .btn {
+        margin-top: 10px;
+    }
+
+</style>
+
+<div class="titulo">
+    <div class="col-md-12">
+        <h4>Listado de Historiales Médicos</h4>
+    </div>
+</div>
+
+@if (TempData["AlertMessage"] != null)
+{
+    <div class="alert alert-success">
+        <strong>¡Ok! -- </strong>@TempData["AlertMessage"]
+    </div>
+}
+
+<div class="mensaje">
+    <p>
+        <a onclick="showInPopup('@Url.Action("Crear", "HistorialMedico", new { id = 0 }, Context.Request.Scheme)' , '')"
+           class="btn btn-sm btn-success text-white">
+            Agregar un historial médico  <i class="fa fa-plus-circle"></i>
+        </a>
+    </p>
+</div>
+
+<!-- Tabla de historiales médicos -->
+<div class="col-md-12">
+    <div class="card">
+        <div class="card-body">
+            <table id="historialesMedicos" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Número de Historial</th>
+                        <th scope="col">Detalles</th>
+                        <th scope="col">Antecedentes Familiares</th>
+                        <th scope="col">Antecedentes Personales</th>
+                        <th scope="col">Alergias</th>
+                        <th scope="col">Notas y Observaciones</th>
+                        <th scope="col">Paciente</th>
+                        <th scope="col">Medicamento</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var historial in Model)
+                    {
+                        <tr>
+                            <th scope="row">@historial.HistorialID</th>
+                            <td>@historial.NumHistorial</td>
+                            <td>@historial.Detalles</td>
+                            <td>@historial.AntecedentesFamiliares</td>
+                            <td>@historial.AntecedentesPersonales</td>
+                            <td>@historial.Alergias</td>
+                            <td>@historial.NotasObservaciones</td>
+                            <td>@historial.Pacientes.NombrePaciente</td>
+                            <td>@historial.Medicamento.NombreMedicamento</td>
+                            <td>
+                                <a onclick="showInPopup('@Url.Action("Editar", "HistorialMedico", new { id = historial.HistorialID }, Context.Request.Scheme)' , 'Actualizar Historial Médico')"
+                                   class="btn btn-outline-warning btn-sm">
+                                    <i class="fa fa-pencil-alt"></i>
+                                </a>
+                                <button data-id="@historial.HistorialID"
+                                        class="btn btn-outline-danger btn-sm deleteItem"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteDialog">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div class="row">
+        @foreach (var historial in Model)
+        {
+            <div class="col-md-6 historial-card">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="fa fa-file-medical"></i> Historial ID: @historial.HistorialID
+                        </h5>
+                        <p class="card-text">
+                            <i class="fa fa-hashtag"></i> Número de Historial: @historial.NumHistorial
+                        </p>
+                        <p class="card-text">
+                            <i class="fa fa-info-circle"></i> Detalles: @historial.Detalles
+                        </p>
+                        <p class="card-text">
+                            <i class="fa fa-history"></i> Antecedentes Familiares: @historial.AntecedentesFamiliares
+                        </p>
+                        <p class="card-text">
+                            <i class="fa fa-user"></i> Antecedentes Personales: @historial.AntecedentesPersonales
+                        </p>
+                        <p class="card-text">
+                            <i class="fa fa-allergies"></i> Alergias: @historial.Alergias
+                        </p>
+                        <p class="card-text">
+                            <i class="fa fa-sticky-note"></i> Notas y Observaciones: @historial.NotasObservaciones
+                        </p>
+                        <p class="card-text">
+                            <i class="fa fa-user"></i> Paciente: @historial.Pacientes.NombrePaciente
+                        </p>
+                        <p class="card-text">
+                            <i class="fa fa-pills"></i> Medicamento: @historial.Medicamento.NombreMedicamento
+                        </p>
+                        <div class="text-center mt-3">
+                            <a onclick="showInPopup('@Url.Action("Editar", "HistorialMedico", new { id = historial.HistorialID }, Context.Request.Scheme)' , 'Actualizar Historial Médico')"
+                               class="btn btn-outline-warning btn-sm">
+                                <i class="fa fa-pencil-alt"></i> Actualizar
+                            </a>
+                            <button data-id="@historial.HistorialID" class="btn btn-outline-danger btn-sm deleteItem" data-bs-toggle="modal" data-bs-target="#deleteDialog">
+                                <i class="fa fa-trash"></i> Eliminar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<partial name="_MostrarModal" />
+<partial name="_EliminarModal" />
+
+@section Scripts {
+    <script src="~/js/ShowModal.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#historialesMedicos').DataTable({
+                "language": {
+                    url: "https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
+                }
+            });
+        });
+    </script>
+
+    <script>
+        sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/HistorialMedico/Eliminar/', false);
+    </script>
+}
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>

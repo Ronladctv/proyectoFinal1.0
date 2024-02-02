@@ -1,0 +1,146 @@
+﻿@model IEnumerable<proyectoFinal.Models.Entidades.Especialidad>
+
+@{
+    ViewData["Title"] = "ListadoEspecialidad";
+}
+
+<style>
+    .titulo {
+        margin-left: 10px;
+    }
+
+    .mensaje {
+        margin-left: 10px;
+    }
+
+    .especialidad-card {
+        margin-bottom: 20px;
+    }
+
+    .card-content {
+        background-image: url('/imagenes/15.png'); /* Ruta de tu imagen de fondo */
+        background-size: cover; /* Ajusta según sea necesario */
+        background-position: center; /* Ajusta según sea necesario */
+        padding: 10px; /* Ajusta según sea necesario */
+        border-radius: 8px; /* Ajusta según sea necesario */
+    }
+
+    .card-title i,
+    .card-text i {
+        margin-right: 5px;
+    }
+</style>
+
+<div class="titulo">
+    <div class="col-md-12">
+        <h4>Listado de Especialidades</h4>
+    </div>
+</div>
+
+<button id="toggleTable" class="btn btn-primary">Mostrar/ocultar tabla</button>
+<br />
+
+<!-- Botón para agregar una nueva especialidad -->
+<div class="mensaje">
+    <p>
+        <a onclick="showInPopup('@Url.Action("Crear", "Especialidad", new { id = 0 }, Context.Request.Scheme)' , '')" class="btn btn-sm btn-success text-white">
+            Agregar una especialidad  <i class="fa fa-plus-circle"></i>
+        </a>
+    </p>
+</div>
+
+<!-- Tarjetas de especialidades -->
+<div class="row" id="especialidadesCards">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 mb-4 especialidad-card">
+            <div class="card">
+                <div class="card-body card-content">
+                    <!-- Agregado: Div para el contenido de la tarjeta -->
+                    <h5 class="card-title">
+                        <i class="fa fa-stethoscope"></i> @item.NombreEspecialidad
+                    </h5>
+                    <p class="card-text">
+                        <i class="fa fa-info-circle"></i> @item.Descripcion
+                    </p>
+                    <a onclick="showInPopup('@Url.Action("Editar", "Especialidad", new { id = item.EspecialidadID }, Context.Request.Scheme)' ,'Actualizar Especialidad')" class="btn btn-outline-warning btn-sm">
+                        <i class="fa fa-pencil-alt"></i> Editar
+                    </a>
+                    <button data-id="@item.EspecialidadID" class="btn btn-outline-danger btn-sm deleteItem" data-bs-toggle="modal" data-bs-target="#deleteDialog">
+                        <i class="fa fa-trash"></i> Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<!-- Tabla de especialidades -->
+<div class="col-md-12" id="especialidadesTabla" style="display: none;">
+    <div class="card">
+        <div class="card-body">
+            <table id="especialidad" class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">NombreEspecialidad</th>
+                        <th scope="col">Descripcion</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="row">@item.EspecialidadID</th>
+                            <td> @Html.DisplayFor(modelItem => item.NombreEspecialidad)</td>
+                            <td> @Html.DisplayFor(modelItem => item.Descripcion)</td>
+                            <td>
+                                <a onclick="showInPopup('@Url.Action("Editar", "Especialidad", new { id = item.EspecialidadID }, Context.Request.Scheme)' ,'Actualizar Especialidad')" class="btn btn-outline-warning btn-sm">
+                                    <i class="fa fa-pencil-alt"></i> Editar
+                                </a>
+                                <button data-id="@item.EspecialidadID" class="btn btn-outline-danger btn-sm deleteItem" data-bs-toggle="modal" data-bs-target="#deleteDialog">
+                                    <i class="fa fa-trash"></i> Eliminar
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<partial name="_MostrarModal" />
+<partial name="_EliminarModal" />
+
+@section Scripts {
+    <script src="~/js/ShowModal.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#especialidad').DataTable({
+                "language": {
+                    url: "https://cdn.datatables.net/plug-ins/1.11.5/i18n/es-ES.json"
+                },
+            });
+        });
+    </script>
+
+    <script>
+        sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Especialidad/Eliminar/', false);
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $("#toggleTable").click(function () {
+                $("#especialidadesTabla").toggle();
+            });
+        });
+    </script>
+}
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
